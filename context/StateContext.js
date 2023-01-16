@@ -47,6 +47,12 @@ export const StateContext = ({ children }) => {
     if(cartItems.length > 0){
       state.cartItems = cartItems
       localStorage.setItem('state', JSON.stringify(state));
+    }else{
+      setTotalPrice(0)
+      setTotalQty(0)
+      state.totalPrice = 0
+      state.totalQty = 0
+      localStorage.setItem('state', JSON.stringify(state));
     }    
   }, [cartItems, showCart])
 
