@@ -24,9 +24,9 @@ const ProductDetail = ({ product, products }) => {
 
   return (
     <div className='py-5'>
-      <div className='flex gap-5 w-full md:w-4/5 mx-auto'>
+      <div className='flex md:flex-row flex-col gap-5 w-full p-5 md:p-0 md:w-4/5 mx-auto'>
         <div>
-          <div className='w-64 h-64 rounded-xl overflow-hidden relative shrink-0'>
+          <div className='w-64 h-64 md:mx-0 mx-auto rounded-xl overflow-hidden relative shrink-0'>
             <Image
               src={urlFor(image[index]).url()}
               fill
@@ -34,7 +34,7 @@ const ProductDetail = ({ product, products }) => {
               style={{ objectFit: 'cover' }}
             />{' '}
           </div>
-          <div className='flex items-center gap-2 mt-3'>
+          <div className='flex justify-center md:justify-start items-center gap-2 mt-3'>
             {image &&
               image.map((img, i) => (
                 <div

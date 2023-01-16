@@ -20,7 +20,7 @@ const Layout = ({children}) => {
         <Sidebar setToggleSidebar={setToggleSidebar} />
       }
      
-      <div className='container mx-auto md:p-5'>
+      <div className='lg:container lg:mx-auto md:p-5'>
         <main>{children}</main>
       </div>
 

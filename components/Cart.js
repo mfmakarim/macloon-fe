@@ -41,7 +41,7 @@ const Cart = () => {
   }
 
   return (
-    <div className='fixed top-0 right-0 z-10 bg-white w-96 shadow-lg h-screen p-5 rounded-lg flex flex-col justify-between'>
+    <div className='fixed top-0 right-0 z-10 bg-white w-full md:w-96 shadow-lg h-screen p-5 rounded-lg flex flex-col justify-between'>
       <div className='flex flex-col h-full'>
         <div className='flex items-center gap-3 mb-5'>
           <div

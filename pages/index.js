@@ -13,7 +13,7 @@ const index = ({banner, bannerFooter, products}) => {
             <div className='flex flex-wrap justify-center w-full'>
               {
                 products?.map(product => (
-                  <Product product={product && product} />
+                  <Product product={product && product} key={product._id} />
                 ))
               }
             </div>

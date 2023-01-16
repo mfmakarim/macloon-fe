@@ -15,7 +15,7 @@ const Navbar = ({ setToggleSidebar, children }) => {
 
   return (
     <nav className='shadow-md'>
-      <div className='flex container mx-auto items-center justify-between p-5 '>
+      <div className='flex lg:container lg:mx-auto items-center justify-between p-5 '>
         <div className='md:hidden' onClick={() => setToggleSidebar(true)}>
           <HiOutlineMenuAlt2 size={20} />
         </div>
