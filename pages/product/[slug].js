@@ -15,6 +15,8 @@ const ProductDetail = ({ product, products }) => {
   const { qty, incQty, decQty, onAdd } = useStateContext();
   const { image, name, detail, price } = product;
 
+  const handleChange = () => { return }
+
   return (
     <div className='py-5'>
       <div className='flex gap-5 w-full md:w-4/5 mx-auto'>
@@ -31,6 +33,7 @@ const ProductDetail = ({ product, products }) => {
             {image &&
               image.map((img, i) => (
                 <div
+                key={i}
                   className={`w-14 h-14 rounded-lg overflow-hidden relative cursor-pointer ${
                     i == index ? 'border border-purple-500 shadow-md' : ''
                   }`}
@@ -72,6 +75,7 @@ const ProductDetail = ({ product, products }) => {
               </button>
               <input
                 value={qty && qty}
+                onChange={handleChange}
                 className='border h-10 w-10 text-center'
               />
               <button
@@ -100,7 +104,7 @@ const ProductDetail = ({ product, products }) => {
           {products &&
             products
               .slice(0, 4)
-              .map((product) => <Product product={product} />)}
+              .map((product) => <Product product={product} key={product.slug.current}/>)}
         </div>
       </div>
     </div>

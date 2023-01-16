@@ -8,7 +8,7 @@ const useCategory = () => {
     client.fetch(query).then((data) => {
       setCategories(data)
     })
-  })
+  },[])
 
   return [categories, setCategories]
 }
