@@ -5,6 +5,8 @@ import { HiOutlineTrash } from 'react-icons/hi';
 import { BsCartX } from 'react-icons/bs';
 import Image from 'next/image';
 import { urlFor } from '../lib/client';
+import getStripe from '../lib/getStripe'
+import { toast } from 'react-hot-toast';
 
 const Cart = () => {
   const {
@@ -16,6 +18,27 @@ const Cart = () => {
     onRemove,
     onQtyUpdate,
   } = useStateContext();
+
+
+  const handleCheckout = async () => {
+    const stripe = await getStripe()
+
+    const res = await fetch('/api/stripe', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(cartItems)
+    })
+
+    if(res.statusCode === 500) return;
+
+    const data = await res.json();
+
+    toast.loading('Redirecting...');
+
+    stripe.redirectToCheckout({ sessionId: data.id });
+  }
 
   return (
     <div className='fixed top-0 right-0 z-10 bg-white w-96 shadow-lg h-screen p-5 rounded-lg flex flex-col justify-between'>
@@ -33,7 +56,7 @@ const Cart = () => {
         </div>
         {cartItems.length > 0 &&
           cartItems.map(({ _id, name, quantity, image, price }) => (
-            <div className='bg-gray-100 p-5 rounded-lg mb-3 flex items-center gap-3 relative overflow-auto'>
+            <div className='bg-gray-100 p-5 rounded-lg mb-3 flex items-center gap-3 relative overflow-auto' key={_id}>
               <div className='absolute top-0 right-0 mr-3 mt-3 text-red-500'
               onClick={() => onRemove(_id)}>
                 <HiOutlineTrash />
@@ -89,7 +112,8 @@ const Cart = () => {
             <h3>Subtotal</h3>
             <h3>${totalPrice}</h3>
           </div>
-          <button type='button' className='bg-purple-500 w-full py-3 text-white font-bold rounded-lg'>
+          <button type='button' className='bg-purple-500 w-full py-3 text-white font-bold rounded-lg'
+          onClick={handleCheckout}>
             Checkout
           </button>
         </div>

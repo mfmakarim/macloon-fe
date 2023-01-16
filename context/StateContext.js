@@ -18,20 +18,36 @@ export const StateContext = ({ children }) => {
     
     if(localState) {
       setShowCart(localState.showCart || false)
-      if(localState.cartItems.length == 0){
-        setTotalPrice(0)
-      }
       setCartItems(localState.cartItems || [])
+      setTotalPrice(localState.totalPrice || 0)
+      setTotalQty(localState.totalQty || 0)
     }
   },[])
 
   useEffect(() => {
-    if(showCart !== undefined){
-      const state = { showCart, cartItems }
-  
-      localStorage.setItem('state', JSON.stringify(state));
+    const state = {
+      showCart,
+      totalQty,
+      totalPrice,
+      cartItems
     }
 
+    if(showCart !== undefined){
+      state.showCart = showCart
+      localStorage.setItem('state', JSON.stringify(state));
+    }
+    if(totalPrice > 0){
+      state.totalPrice = totalPrice
+      localStorage.setItem('state', JSON.stringify(state));
+    }
+    if(totalQty > 0){
+      state.totalQty = totalQty
+      localStorage.setItem('state', JSON.stringify(state));
+    }
+    if(cartItems.length > 0){
+      state.cartItems = cartItems
+      localStorage.setItem('state', JSON.stringify(state));
+    }    
   }, [cartItems, showCart])
 
   const incQty = () => {
@@ -80,9 +96,11 @@ export const StateContext = ({ children }) => {
       (item) => item._id === id
     );
     const newCartItems = cartItems.filter((item) => item._id !== id);
-
-    setTotalPrice((prevTotalPrice) => prevTotalPrice - foundProduct.price * foundProduct.quantity);
-    setTotalQty(prevTotalQty => prevTotalQty - foundProduct.quantity);
+    
+    if(foundProduct.quantity > 1){
+      setTotalPrice((prevTotalPrice) => prevTotalPrice - foundProduct.price * foundProduct.quantity);
+      setTotalQty(prevTotalQty => prevTotalQty - foundProduct.quantity);
+    }
     setCartItems(newCartItems);
   }
 
@@ -124,6 +142,9 @@ export const StateContext = ({ children }) => {
         setShowCart,
         cartItems,
         onQtyUpdate,
+        setCartItems,
+        setTotalPrice,
+        setTotalQty
       }}
     >
       {children}
